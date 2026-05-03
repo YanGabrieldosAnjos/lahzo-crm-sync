@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: lahzo
+      POSTGRES_PASSWORD: lahzo
+      POSTGRES_DB: lahzo
+    ports:
+      - "5432:5432"
+    volumes:
+      - lahzo_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lahzo -d lahzo"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  lahzo_pg:
