@@ -6,6 +6,11 @@ import { contactsRouter } from "./api/contacts.js";
 const app = express();
 const PORT = Number(process.env.PORT ?? 3000);
 
+// Trust the X-Forwarded-Proto / X-Forwarded-Host headers injected by ngrok
+// and any reverse proxy, so req.protocol + req.get('host') reflect the
+// public URL — which is what HubSpot signs the webhook against.
+app.set("trust proxy", 1);
+
 // ---------------------------------------------------------------------------
 // Middleware
 // ---------------------------------------------------------------------------

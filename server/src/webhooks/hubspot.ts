@@ -32,7 +32,7 @@ type HubSpotWebhookEvent = z.infer<typeof hubSpotEventSchema>;
 
 export const hubspotWebhookHandler: RequestHandler = async (req, res) => {
   // 1. Verify signature — return 400 immediately if invalid or replayed
-  const fullUrl = `${process.env.PUBLIC_BASE_URL}/webhooks/hubspot`;
+  const fullUrl = `${req.protocol}://${req.get("host")}${req.path}`;
   const rawBody = (req.body as Buffer).toString();
 
   try {
